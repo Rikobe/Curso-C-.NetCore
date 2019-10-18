@@ -25,7 +25,16 @@ namespace CoreEscuela
             CargarEvaluaciones();  
         }
 
-        public List<ObjetoEscuelaBase> GetObjetosEscuela
+        public Dictionary<string,IEnumerable<ObjetoEscuelaBase>> GetDiccionarioObjetos()
+        {
+            var diccionario = new Dictionary<string, IEnumerable<ObjetoEscuelaBase>>();
+
+            diccionario.Add("Escuela", new[] {Escuela});
+            diccionario.Add("Cursos", Escuela.Cursos.Cast<ObjetoEscuelaBase>());
+            return diccionario;
+        }
+
+        public IReadOnlyList<ObjetoEscuelaBase> GetObjetosEscuela
         (   out int conteoEvaluaciones, out int conteoCursos, out int conteoAsignaturas, out int conteoAlumnos, 
             bool traeEvaluaciones = true, bool traeAlumnos = true, bool traeAsignaturas = true, bool traeCursos = true)
         {
@@ -43,7 +52,7 @@ namespace CoreEscuela
             {
                 conteoAsignaturas += curso.Asignaturas.Count;
                 conteoAlumnos += curso.Alumnos.Count;
-                
+
                 if (traeAsignaturas)
                     listaObj.AddRange(curso.Asignaturas);
                 
@@ -62,7 +71,7 @@ namespace CoreEscuela
                 
             }
 
-            return listaObj;
+            return listaObj.AsReadOnly();
         }
 
         #region Métodos de carga
