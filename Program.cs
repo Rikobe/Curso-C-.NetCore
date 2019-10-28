@@ -22,13 +22,15 @@ namespace CoreEscuela
 
             var listaLugar = from obj in listaObjetos where obj is ILugar select (ILugar) obj;
             //engine.Escuela.LimpiarLugar();
+            var dictmp = engine.GetDiccionarioObjetos();
+
+            engine.ImprimirDiccionario(dictmp, false);
         }
 
         private static void ImpimirCursosEscuela(Escuela escuela)
         {
 
             Printer.WriteTitle("Cursos de la Escuela");
-
 
             if (escuela?.Cursos != null)
             {
